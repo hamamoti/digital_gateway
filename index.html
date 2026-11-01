@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>デジタルの扉 | HIGH SCHOOL DIGITAL GATEWAY</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts (Zen Kaku Gothic New, Plus Jakarta Sans, Caveat for handwritten touch) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#F9F9FB',
+                        cardBg: '#FFFFFF',
+                        ink: '#1E232A',
+                        subtle: '#6B7280',
+                        accent: {
+                            coral: '#FF6B6B',
+                            mint: '#10B981',
+                            blue: '#3B82F6',
+                            yellow: '#F59E0B',
+                            purple: '#8B5CF6',
+                        },
+                        borderSoft: '#E5E7EB',
+                    },
+                    fontFamily: {
+                        sans: ['"Zen Kaku Gothic New"', '"Plus Jakarta Sans"', 'sans-serif'],
+                        handwrite: ['"Caveat"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F9F9FB;
+            color: #1E232A;
+            background-image: radial-gradient(#E5E7EB 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Subtle organic custom drop-shadows */
+        .soft-shadow {
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 4px 10px -3px rgba(0, 0, 0, 0.02);
+        }
+        .soft-shadow-hover:hover {
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 8px 16px -4px rgba(0, 0, 0, 0.04);
+            transform: translateY(-3px);
+        }
+
+        /* Wavy underlining */
+        .hand-underline {
+            background-image: linear-gradient(120deg, rgba(255, 107, 107, 0.25) 0%, rgba(255, 107, 107, 0.25) 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 88%;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F9F9FB;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D1D5DB;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9CA3AF;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-accent-coral/20 selection:text-ink">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 bg-paper/90 backdrop-blur-md border-b border-borderSoft/80">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-3 group">
+                <span class="w-9 h-9 rounded-xl bg-ink text-white flex items-center justify-center font-extrabold text-lg group-hover:rotate-6 transition-transform">
+                    d.
+                </span>
+                <div class="flex flex-col">
+                    <span class="font-black text-lg tracking-tight text-ink leading-none">
+                        デジタルの扉
+                    </span>
+                    <span class="text-[10px] text-subtle font-bold tracking-widest uppercase mt-0.5">
+                        Highschool Digital Portal
+                    </span>
+                </div>
+            </a>
+            
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-bold text-subtle">
+                <a href="#diagnostic" class="hover:text-ink transition-colors flex items-center space-x-1">
+                    <span class="text-accent-coral font-handwrite text-lg">01.</span>
+                    <span>適性診断</span>
+                </a>
+                <a href="#sandbox" class="hover:text-ink transition-colors flex items-center space-x-1">
+                    <span class="text-accent-blue font-handwrite text-lg">02.</span>
+                    <span>ライブ体験</span>
+                </a>
+                <a href="#roadmap" class="hover:text-ink transition-colors flex items-center space-x-1">
+                    <span class="text-accent-mint font-handwrite text-lg">03.</span>
+                    <span>学びのサイン</span>
+                </a>
+                <a href="#faq" class="hover:text-ink transition-colors flex items-center space-x-1">
+                    <span class="text-accent-purple font-handwrite text-lg">04.</span>
+                    <span>Q&A</span>
+                </a>
+            </nav>
+
+            <a href="#diagnostic" class="bg-ink hover:bg-slate-800 text-white px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm shadow-sm transition-all hover:scale-[1.02]">
+                診断をはじめる ✦
+            </a>
+        </div>
+    </header>
+
+    <main class="space-y-24 pb-24">
+
+        <!-- HERO SECTION -->
+        <section class="relative pt-16 pb-12 md:pt-24 md:pb-20 overflow-hidden">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Hero Left Text -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-white border border-borderSoft text-xs font-bold text-subtle shadow-sm">
+                            <span class="w-2 h-2 rounded-full bg-accent-coral animate-ping"></span>
+                            <span>デジタル初心者の高校生へ</span>
+                        </div>
+                        
+                        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-ink leading-[1.25] tracking-tight">
+                            「つくる」と「わかる」の、<br>
+                            <span class="hand-underline">はじめのワンステップ。</span>
+                        </h1>
+                        
+                        <p class="text-subtle text-base sm:text-lg leading-relaxed max-w-xl">
+                            プログラミングも、AIも、デザインも。特別に難しい勉強ではありません。<br class="hidden sm:inline">
+                            自分の「好き」を自由に表現するための、新しい文房具を触ってみませんか？
+                        </p>
+
+                        <div class="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                            <a href="#diagnostic" class="bg-ink text-white px-8 py-4 rounded-2xl font-bold text-base shadow-md hover:bg-slate-800 transition-all text-center flex items-center justify-center space-x-2">
+                                <span>わたし向けの分野を診断する</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                            <a href="#sandbox" class="bg-white border border-borderSoft hover:bg-gray-50 text-ink px-8 py-4 rounded-2xl font-bold text-base shadow-sm transition-all text-center">
+                                まず実験画面で遊んでみる 
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Hero Right Visual Card (Magazine Style) -->
+                    <div class="lg:col-span-5 relative">
+                        <div class="bg-white rounded-3xl p-8 border border-borderSoft soft-shadow relative z-10 space-y-6">
+                            <div class="flex justify-between items-center border-b border-gray-100 pb-4">
+                                <span class="text-xs font-bold text-subtle uppercase tracking-wider">Today's Highlight</span>
+                                <span class="text-xs font-handwrite text-2xl text-accent-coral font-bold">Step by Step</span>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div class="p-4 rounded-2xl bg-paper border border-borderSoft flex items-center space-x-4">
+                                    <div class="w-10 h-10 rounded-xl bg-accent-coral/10 text-accent-coral flex items-center justify-center font-bold text-lg">
+                                        🎨
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-subtle">Design & Art</div>
+                                        <div class="text-sm font-bold text-ink">画面の「見栄え」を整える</div>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 rounded-2xl bg-paper border border-borderSoft flex items-center space-x-4">
+                                    <div class="w-10 h-10 rounded-xl bg-accent-blue/10 text-accent-blue flex items-center justify-center font-bold text-lg">
+                                        💻
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-subtle">Web & Logic</div>
+                                        <div class="text-sm font-bold text-ink">コードで仕組みを動かす</div>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 rounded-2xl bg-paper border border-borderSoft flex items-center space-x-4">
+                                    <div class="w-10 h-10 rounded-xl bg-accent-mint/10 text-accent-mint flex items-center justify-center font-bold text-lg">
+                                        ✦
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-subtle">AI Helper</div>
+                                        <div class="text-sm font-bold text-ink">AIをアイデアの相棒にする</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center pt-2">
+                                <span class="text-xs font-bold text-subtle">難しい数式も専門用語も不要です。</span>
+                            </div>
+                        </div>
+
+                        <!-- Decorative background frame -->
+                        <div class="absolute -bottom-4 -right-4 w-full h-full rounded-3xl border-2 border-dashed border-gray-300 pointer-events-none"></div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAGNOSIS SECTION -->
+        <section id="diagnostic" class="max-w-4xl mx-auto px-6 pt-8">
+            <div class="bg-white border border-borderSoft rounded-3xl p-8 sm:p-12 soft-shadow relative">
+                
+                <div class="text-center mb-10">
+                    <span class="text-xs font-extrabold tracking-widest text-accent-coral uppercase bg-accent-coral/10 px-3 py-1 rounded-full">
+                        TYPE DIAGNOSIS
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-black text-ink mt-3">わたしにぴったりのデジタルは？</h2>
+                    <p class="text-subtle text-xs sm:text-sm mt-2">直感で3つの質問に答えて、自分に合う学習の第一歩を見つけよう。</p>
+                </div>
+
+                <!-- Quiz Progress -->
+                <div id="quiz-container">
+                    <div class="flex items-center justify-between mb-2 text-xs font-bold text-subtle">
+                        <span>QUESTION</span>
+                        <span id="quiz-step-num">1 / 3</span>
+                    </div>
+                    <div class="w-full bg-paper h-2 rounded-full mb-8 overflow-hidden border border-borderSoft">
+                        <div id="quiz-progress" class="bg-ink h-full w-1/3 transition-all duration-300"></div>
+                    </div>
+
+                    <!-- Question Box -->
+                    <div id="question-box" class="min-h-[200px] flex flex-col justify-between">
+                        <h3 id="question-text" class="text-lg sm:text-xl font-bold text-ink text-center mb-6 leading-snug">
+                            Q1. 放課後や休日に、時間を忘れて熱中しやすいのはどれ？
+                        </h3>
+
+                        <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Dynamic Options via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Result Box (Hidden by Default) -->
+                <div id="result-container" class="hidden text-center py-4 animate-fade-in">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-paper border border-borderSoft flex items-center justify-center text-3xl mb-4 soft-shadow">
+                        <span id="result-emoji">🎨</span>
+                    </div>
+                    <span id="result-tag" class="text-xs font-bold text-accent-coral uppercase tracking-widest">DIAGNOSIS RESULT</span>
+                    <h3 id="result-title" class="text-2xl sm:text-3xl font-black text-ink mt-1 mb-3">
+                        デザイン・つくる派
+                    </h3>
+                    <p id="result-description" class="text-subtle max-w-lg mx-auto text-sm leading-relaxed mb-8">
+                        見た目の美しさや使いやすさをデザインし、自分の感性をカタチにするクリエイタータイプ！
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button onclick="resetQuiz()" class="px-6 py-3 rounded-xl bg-paper border border-borderSoft text-subtle font-bold text-xs hover:text-ink transition-colors">
+                            <i class="fa-solid fa-rotate-left mr-1.5"></i>もう一度試す
+                        </button>
+                        <a href="#roadmap" class="px-8 py-3 rounded-xl bg-ink text-white font-bold text-xs shadow-md hover:bg-slate-800 transition-all">
+                            このタイプのおすすめ学習法を見る ↓
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- LIVE SANDBOX WORKSPACE -->
+        <section id="sandbox" class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-xs font-extrabold tracking-widest text-accent-blue uppercase bg-accent-blue/10 px-3 py-1 rounded-full">
+                    PLAYGROUND
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-black text-ink mt-3">ライブ体験ワークスペース</h2>
+                <p class="text-subtle text-sm mt-2">画面上の操作がどう反映されるか、実際に触って確かめてみよう。</p>
+            </div>
+
+            <!-- Sandbox Outer Card -->
+            <div class="bg-white border border-borderSoft rounded-3xl p-6 sm:p-10 soft-shadow">
+                
+                <!-- Nav Tabs -->
+                <div class="flex flex-wrap justify-center gap-2 mb-8 border-b border-borderSoft pb-4">
+                    <button onclick="switchTab('css-tab')" id="btn-css-tab" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-ink text-white transition-all">
+                        ① CSSデザインチェンジャー
+                    </button>
+                    <button onclick="switchTab('js-tab')" id="btn-js-tab" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-paper text-subtle border border-borderSoft hover:bg-gray-100 transition-all">
+                        ② はじめてのJavaScript
+                    </button>
+                    <button onclick="switchTab('ai-tab')" id="btn-ai-tab" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-paper text-subtle border border-borderSoft hover:bg-gray-100 transition-all">
+                        ③ AIプロンプト実験室
+                    </button>
+                </div>
+
+                <!-- TAB 1: CSS DESIGN CHANGER -->
+                <div id="css-tab" class="tab-content grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-5 space-y-4 bg-paper p-5 rounded-2xl border border-borderSoft text-xs">
+                        <div class="font-bold text-ink border-b border-borderSoft pb-2 flex justify-between">
+                            <span>コントロールパネル</span>
+                            <span class="text-subtle font-normal">CSSの値を調整</span>
+                        </div>
+                        
+                        <div>
+                            <label class="block font-bold text-subtle mb-1">カードの背景色</label>
+                            <div class="flex gap-2">
+                                <button onclick="changeCardBg('#FFFFFF')" class="w-7 h-7 rounded-full bg-white border border-gray-300"></button>
+                                <button onclick="changeCardBg('#FEF3C7')" class="w-7 h-7 rounded-full bg-amber-100 border border-amber-300"></button>
+                                <button onclick="changeCardBg('#E0F2FE')" class="w-7 h-7 rounded-full bg-sky-100 border border-sky-300"></button>
+                                <button onclick="changeCardBg('#FCE7F3')" class="w-7 h-7 rounded-full bg-pink-100 border border-pink-300"></button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-subtle mb-1">枠線の丸み (border-radius): <span id="radius-val">16</span>px</label>
+                            <input type="range" id="css-radius" min="0" max="32" value="16" oninput="updateCSSLive()" class="w-full accent-ink">
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-subtle mb-1">テキスト文言</label>
+                            <input type="text" id="css-text" value="デザインはコードで変わる！" oninput="updateCSSLive()" class="w-full bg-white border border-borderSoft rounded-lg px-3 py-2 text-ink focus:outline-none font-medium">
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 flex flex-col items-center justify-center p-8 bg-gray-50 rounded-2xl border border-dashed border-gray-300 min-h-[240px]">
+                        <div id="preview-card" class="bg-white p-6 rounded-2xl border border-borderSoft soft-shadow transition-all duration-200 text-center space-y-2 max-w-xs w-full">
+                            <span class="text-xs font-bold text-accent-coral">PREVIEW</span>
+                            <h4 id="preview-text" class="text-base font-extrabold text-ink">デザインはコードで変わる！</h4>
+                            <p class="text-[11px] text-subtle">色や丸みを変えるだけで、印象がガラリと変化します。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: FIRST JAVASCRIPT -->
+                <div id="js-tab" class="tab-content hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-5 space-y-4 bg-paper p-5 rounded-2xl border border-borderSoft text-xs">
+                        <div class="font-bold text-ink border-b border-borderSoft pb-2">
+                            JavaScript カウンター実験
+                        </div>
+                        <p class="text-subtle leading-relaxed">
+                            ボタンをクリックした回数をJavaScriptが覚えて、画面上の数字をリアルタイムに計算して変化させています。
+                        </p>
+                        <div class="flex gap-2 pt-2">
+                            <button onclick="countUp()" class="flex-1 bg-ink text-white py-2.5 rounded-xl font-bold hover:bg-slate-800 transition-colors">
+                                カウント +1
+                            </button>
+                            <button onclick="resetCount()" class="bg-white border border-borderSoft text-subtle px-4 py-2.5 rounded-xl font-bold hover:text-ink">
+                                リセット
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 flex flex-col items-center justify-center p-8 bg-gray-50 rounded-2xl border border-dashed border-gray-300 min-h-[240px] space-y-2">
+                        <span class="text-xs font-bold text-subtle">CURRENT COUNT</span>
+                        <div id="js-counter-num" class="text-6xl font-black text-ink transition-transform">
+                            0
+                        </div>
+                        <p id="js-counter-msg" class="text-xs font-bold text-accent-blue pt-2">
+                            ボタンを押してみてください！
+                        </p>
+                    </div>
+                </div>
+
+                <!-- TAB 3: AI PROMPT LAB -->
+                <div id="ai-tab" class="tab-content hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-5 space-y-4 bg-paper p-5 rounded-2xl border border-borderSoft text-xs">
+                        <div class="font-bold text-ink border-b border-borderSoft pb-2">
+                            プロンプトの「比較」実験
+                        </div>
+                        <p class="text-subtle leading-relaxed">
+                            AIへの頼み方（プロンプト）によって、返ってくる回答の質がどう変わるか体験してみましょう。
+                        </p>
+                        <div class="space-y-2">
+                            <button onclick="selectAiPrompt('vague')" id="btn-prompt-vague" class="w-full text-left p-3 rounded-xl border border-borderSoft bg-white font-bold text-subtle hover:text-ink flex justify-between items-center">
+                                <span>❌ あいまいな指示</span>
+                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </button>
+                            <button onclick="selectAiPrompt('smart')" id="btn-prompt-smart" class="w-full text-left p-3 rounded-xl border border-ink bg-ink text-white font-bold flex justify-between items-center">
+                                <span>⭕️ うまい指示（条件指定）</span>
+                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 bg-paper p-6 rounded-2xl border border-borderSoft min-h-[240px] flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between text-xs border-b border-borderSoft pb-2">
+                                <span class="font-bold text-subtle">AIのレスポンス結果</span>
+                                <span id="prompt-badge" class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold text-[10px]">うまい指示</span>
+                            </div>
+                            <p id="ai-response-text" class="text-xs sm:text-sm text-ink leading-relaxed font-medium">
+                                【AIの回答】<br>
+                                高校生向けに「AIの基本」を3つの要点にまとめました：<br>
+                                1. 大量のデータからパターンを学ぶ仕組み<br>
+                                2. 人間の言葉を理解して文章や画像を作る<br>
+                                3. 得意なこと・苦手なことを知って「相棒」として使うのがコツ！
+                            </p>
+                        </div>
+                        <div class="text-[11px] text-subtle pt-3 border-t border-borderSoft mt-4">
+                            💡 「誰向けか」「何個か」「どんな形式か」を指定するとAIは本領を発揮します。
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ROADMAP & LEARNING SIGNS -->
+        <section id="roadmap" class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs font-extrabold tracking-widest text-accent-mint uppercase bg-accent-mint/10 px-3 py-1 rounded-full">
+                    ROADMAP
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-black text-ink mt-3">学びのロードサイン</h2>
+                <p class="text-subtle text-sm mt-2">「何から始めればいい？」迷ったらここから一歩を踏み出そう。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- CARD 1 -->
+                <div class="bg-white rounded-3xl p-8 border border-borderSoft soft-shadow soft-shadow-hover transition-all flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-accent-coral/10 text-accent-coral flex items-center justify-center font-bold text-xl">
+                            🎨
+                        </div>
+                        <span class="text-[11px] font-extrabold text-accent-coral uppercase tracking-wider block">DESIGN & UI</span>
+                        <h3 class="text-xl font-bold text-ink">デザイン・魅せる</h3>
+                        <p class="text-subtle text-xs leading-relaxed">
+                            Webページの見た目や、使いやすいアプリの画面（UI）、ポスターやSNS画像を自分のセンスでカタチにする分野です。
+                        </p>
+                    </div>
+
+                    <div class="mt-8 pt-4 border-t border-borderSoft space-y-3">
+                        <div class="text-xs font-bold text-ink">最初にやるべき1つのこと：</div>
+                        <p class="text-xs text-subtle">好きなWebサイトの「色使い」や「文字の大きさ」を観察してみる</p>
+
+                        <div class="text-xs font-bold text-ink pt-2">おすすめの無料ツール：</div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[11px] bg-paper px-2.5 py-1 rounded-md border border-borderSoft font-bold text-subtle">Canva</span>
+                            <span class="text-[11px] bg-paper px-2.5 py-1 rounded-md border border-borderSoft font-bold text-subtle">Figma</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 2 -->
+                <div class="bg-white rounded-3xl p-8 border border-borderSoft soft-shadow soft-shadow-hover transition-all flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-accent-blue/10 text-accent-blue flex items-center justify-center font-bold text-xl">
+                            💻
+                        </div>
+                        <span class="text-[11px] font-extrabold text-accent-blue uppercase tracking-wider block">PROGRAMMING</span>
+                        <h3 class="text-xl font-bold text-ink">プログラミング・動かす</h3>
+                        <p class="text-subtle text-xs leading-relaxed">
+                            コードを書いて、ゲームを動かしたり、便利なWebアプリやツールを作るモノづくりの中心分野です。
+                        </p>
+                    </div>
+
+                    <div class="mt-8 pt-4 border-t border-borderSoft space-y-3">
+                        <div class="text-xs font-bold text-ink">最初にやるべき1つのこと：</div>
+                        <p class="text-xs text-subtle">「HTML」を使って自分の名前や挨拶を画面に表示させてみる</p>
+
+                        <div class="text-xs font-bold text-ink pt-2">おすすめの無料ツール：</div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[11px] bg-paper px-2.5 py-1 rounded-md border border-borderSoft font-bold text-subtle">Scratch</span>
+                            <span class="text-[11px] bg-paper px-2.5 py-1 rounded-md border border-borderSoft font-bold text-subtle">Progate</span>
+                            <span class="text-[11px] bg-paper px-2.5 py-1 rounded-md border border-borderSoft font-bold text-subtle">Glitch</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3 -->
+                <div class="bg-white rounded-3xl p-8 border border-borderSoft soft-shadow soft-shadow-hover transition-all flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-accent-purple/10 text-accent-purple flex items-center justify-center font-bold text-xl">
+                            ✦
+                        </div>
+                        <span class="text-[11px] font-extrabold text-accent-purple uppercase tracking-wider block">AI & PROMPT</span>
+                        <h3 class="text-xl font-bold text-ink">AI活用・使いこなす</h3>
+                        <p class="text-subtle text-xs leading-relaxed">
+                            ChatGPTなどの生成AIに正しい指示を出して、宿題のサポートやアイデア出し、自動化を行う最先端分野です。
+                        </p>
+                    </div>
+
+                    <div class="mt-8 pt-4 border-t border-borderSoft space-y-3">
+                        <div class="text-xs font-bold text-ink">最初にやるべき1つのこと：</div>
+                        <p class="text-xs text-subtle">AIに「〜について高校生向けに要約して」と具体的な指示を試す</p>
+
+                        <div class="text-xs font-bold text-ink pt-2">おすすめの無料ツール：</div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[11px] bg-paper px-2.5 py-1 rounded-md border border-borderSoft font-bold text-subtle">ChatGPT</span>
+                            <span class="text-[11px] bg-paper px-2.5 py-1 rounded-md border border-borderSoft font-bold text-subtle">Gemini</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section id="faq" class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-xs font-extrabold tracking-widest text-accent-purple uppercase bg-accent-purple/10 px-3 py-1 rounded-full">
+                    Q & A
+                </span>
+                <h2 class="text-3xl font-black text-ink mt-3">高校生によくあるお悩み・疑問</h2>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-white border border-borderSoft rounded-2xl p-6 soft-shadow">
+                    <h3 class="text-base font-bold text-ink flex items-center">
+                        <span class="text-accent-coral font-handwrite text-2xl mr-3">Q.</span>
+                        数学が苦手でもプログラミングってできますか？
+                    </h3>
+                    <p class="text-subtle text-xs sm:text-sm mt-3 leading-relaxed pl-7">
+                        まったく問題ありません！プログラミングで使うのは高度な数学ではなく、「順序立てて物事を考えるパズルのような思考（ロジック）」です。
+                    </p>
+                </div>
+
+                <div class="bg-white border border-borderSoft rounded-2xl p-6 soft-shadow">
+                    <h3 class="text-base font-bold text-ink flex items-center">
+                        <span class="text-accent-blue font-handwrite text-2xl mr-3">Q.</span>
+                        ハイスペックな高いパソコンを買う必要がありますか？
+                    </h3>
+                    <p class="text-subtle text-xs sm:text-sm mt-3 leading-relaxed pl-7">
+                        最初は普通のノートPCや学校の端末で十分です。Webサイト制作やCanvaでのデザイン、AI活用、Scratchなどは一般的なブラウザさえ動けば快適に使えます。
+                    </p>
+                </div>
+
+                <div class="bg-white border border-borderSoft rounded-2xl p-6 soft-shadow">
+                    <h3 class="text-base font-bold text-ink flex items-center">
+                        <span class="text-accent-mint font-handwrite text-2xl mr-3">Q.</span>
+                        独学で挫折しないコツはありますか？
+                    </h3>
+                    <p class="text-subtle text-xs sm:text-sm mt-3 leading-relaxed pl-7">
+                        「文法を暗記しようとしないこと」です。「自分の好きなアイドルのファンサイトを作る」「ゲームのミニツールを作る」など、作りたい目的を1つ決めて触りながら覚えるのが一番の近道です。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CALL TO ACTION -->
+        <section class="max-w-4xl mx-auto px-6">
+            <div class="bg-ink text-white rounded-3xl p-10 sm:p-14 text-center soft-shadow relative overflow-hidden">
+                <div class="relative z-10 space-y-4">
+                    <h2 class="text-2xl sm:text-4xl font-black">準備はできましたか？</h2>
+                    <p class="text-gray-400 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
+                        まずは診断や簡単なミニ体験から。あなたの好奇心が新しい選択肢を広げていきます。
+                    </p>
+                    <div class="pt-4">
+                        <a href="#diagnostic" class="inline-block bg-white text-ink px-8 py-3.5 rounded-2xl font-bold text-sm hover:bg-gray-100 transition-all">
+                            もう一度診断してみる ✦
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-borderSoft bg-white py-12 text-center text-xs text-subtle">
+        <div class="max-w-6xl mx-auto px-6 space-y-3">
+            <div class="flex justify-center items-center space-x-2">
+                <span class="w-6 h-6 rounded-lg bg-ink text-white flex items-center justify-center font-bold text-xs">d.</span>
+                <span class="font-bold text-ink">デジタルの扉</span>
+            </div>
+            <p>© 2026 HIGH SCHOOL DIGITAL GATEWAY. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* ===================================================
+           1. TYPE DIAGNOSIS LOGIC
+           =================================================== */
+        const quizQuestions = [
+            {
+                q: "Q1. 放課後や休日に、時間を忘れて熱中しやすいのはどれ？",
+                options: [
+                    { text: "絵を描いたり、部屋のレイアウトを工夫する", type: "design" },
+                    { text: "ゲームの裏技を探したり謎解きをする", type: "program" },
+                    { text: "話題の最新アプリやAIツールを試してみる", type: "ai" }
+                ]
+            },
+            {
+                q: "Q2. 文化祭の準備で、一番力になりたい役割は？",
+                options: [
+                    { text: "ポスターやパンフレットの綺麗なデザイン制作", type: "design" },
+                    { text: "出し物のルール作りや仕組みの構築", type: "program" },
+                    { text: "クラスみんなの意見やデータのまとめ作業", type: "ai" }
+                ]
+            },
+            {
+                q: "Q3. 自分の作品を作るならどんなものを届けてみたい？",
+                options: [
+                    { text: "一目見て『かっこいい！』と思われるWeb画面", type: "design" },
+                    { text: "ボタンを押したら便利に動くオリジナルアプリ", type: "program" },
+                    { text: "自分の代わりに調べ物をしてくれるAI相棒", type: "ai" }
+                ]
+            }
+        ];
+
+        const quizResults = {
+            design: {
+                title: "デザイン・つくる派",
+                emoji: "🎨",
+                desc: "見た目の美しさや使いやすさをデザインし、自分の感性をカタチにするクリエイタータイプ！色の組み合わせやフォントで世界観を届ける楽しさがあります。"
+            },
+            program: {
+                title: "プログラム・動かす派",
+                emoji: "💻",
+                desc: "仕組みやルールを自分で作って動かすエンジニアタイプ！考えたロジック通りに画面やキャラクターが動いた瞬間の達成感は格別です。"
+            },
+            ai: {
+                title: "AI・使いこなす派",
+                emoji: "✦",
+                desc: "最先端テクノロジーの使い手！AIに正しい指示を出してアイデア出しや自動化を行う、スマートな使いこなしに向いています。"
+            }
+        };
+
+        let currentQuestion = 0;
+        let quizScores = { design: 0, program: 0, ai: 0 };
+
+        function loadQuestion() {
+            const qData = quizQuestions[currentQuestion];
+            document.getElementById('question-text').innerText = qData.q;
+            document.getElementById('quiz-step-num').innerText = `${currentQuestion + 1} / ${quizQuestions.length}`;
+            
+            const progressPct = ((currentQuestion + 1) / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress').style.width = `${progressPct}%`;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            qData.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "p-4 rounded-2xl bg-paper border border-borderSoft hover:border-ink text-left text-xs sm:text-sm font-bold text-ink transition-all hover:scale-[1.01] flex items-center justify-between";
+                btn.innerHTML = `<span>${opt.text}</span><i class="fa-solid fa-arrow-right text-subtle text-xs"></i>`;
+                btn.onclick = () => selectOption(opt.type);
+                container.appendChild(btn);
+            });
+        }
+
+        function selectOption(type) {
+            quizScores[type]++;
+            currentQuestion++;
+
+            if (currentQuestion < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            
+            let topType = 'design';
+            let maxCount = -1;
+            for (const key in quizScores) {
+                if (quizScores[key] > maxCount) {
+                    maxCount = quizScores[key];
+                    topType = key;
+                }
+            }
+
+            const resData = quizResults[topType];
+            document.getElementById('result-title').innerText = resData.title;
+            document.getElementById('result-description').innerText = resData.desc;
+            document.getElementById('result-emoji').innerText = resData.emoji;
+
+            const resContainer = document.getElementById('result-container');
+            resContainer.classList.remove('hidden');
+
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.6 },
+                    colors: ['#FF6B6B', '#10B981', '#3B82F6']
+                });
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            quizScores = { design: 0, program: 0, ai: 0 };
+            document.getElementById('result-container').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        loadQuestion();
+
+        /* ===================================================
+           2. LIVE WORKSPACE TABS & EXPERIMENTS
+           =================================================== */
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-ink', 'text-white');
+                btn.classList.add('bg-paper', 'text-subtle', 'border', 'border-borderSoft');
+            });
+
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.classList.remove('bg-paper', 'text-subtle', 'border', 'border-borderSoft');
+            activeBtn.classList.add('bg-ink', 'text-white');
+        }
+
+        /* TAB 1: CSS Live Update */
+        function changeCardBg(colorHex) {
+            document.getElementById('preview-card').style.backgroundColor = colorHex;
+        }
+
+        function updateCSSLive() {
+            const radius = document.getElementById('css-radius').value;
+            const text = document.getElementById('css-text').value;
+
+            document.getElementById('radius-val').innerText = radius;
+            const card = document.getElementById('preview-card');
+            card.style.borderRadius = `${radius}px`;
+
+            document.getElementById('preview-text').innerText = text || 'デザインはコードで変わる！';
+        }
+
+        /* TAB 2: JavaScript Counter */
+        let jsCount = 0;
+        function countUp() {
+            jsCount++;
+            const numEl = document.getElementById('js-counter-num');
+            numEl.innerText = jsCount;
+            numEl.classList.add('scale-125');
+            setTimeout(() => numEl.classList.remove('scale-125'), 150);
+
+            const msgEl = document.getElementById('js-counter-msg');
+            msgEl.innerText = `✨ ${jsCount}回クリックされました！`;
+        }
+
+        function resetCount() {
+            jsCount = 0;
+            document.getElementById('js-counter-num').innerText = 0;
+            document.getElementById('js-counter-msg').innerText = 'リセットされました';
+        }
+
+        /* TAB 3: AI Prompt Comparison */
+        const aiPrompts = {
+            vague: {
+                badge: 'あいまいな指示',
+                badgeClass: 'bg-amber-100 text-amber-700',
+                text: '【AIの回答】\nAIについて質問ですね。AIとは人工知能のことで、様々な分野で活用されています。具体的に何について知りたいですか？'
+            },
+            smart: {
+                badge: 'うまい指示（条件指定）',
+                badgeClass: 'bg-emerald-100 text-emerald-700',
+                text: '【AIの回答】\n高校生向けに「AIの基本」を3つの要点にまとめました：\n1. 大量のデータからパターンを学ぶ仕組み\n2. 人間の言葉を理解して文章や画像を作る\n3. 得意なこと・苦手なことを知って「相棒」として使うのがコツ！'
+            }
+        };
+
+        function selectAiPrompt(type) {
+            const data = aiPrompts[type];
+            const badge = document.getElementById('prompt-badge');
+            badge.innerText = data.badge;
+            badge.className = `px-2 py-0.5 rounded font-bold text-[10px] ${data.badgeClass}`;
+
+            document.getElementById('ai-response-text').innerText = data.text;
+
+            const vagueBtn = document.getElementById('btn-prompt-vague');
+            const smartBtn = document.getElementById('btn-prompt-smart');
+
+            if (type === 'vague') {
+                vagueBtn.className = "w-full text-left p-3 rounded-xl border border-ink bg-ink text-white font-bold flex justify-between items-center";
+                smartBtn.className = "w-full text-left p-3 rounded-xl border border-borderSoft bg-white font-bold text-subtle hover:text-ink flex justify-between items-center";
+            } else {
+                smartBtn.className = "w-full text-left p-3 rounded-xl border border-ink bg-ink text-white font-bold flex justify-between items-center";
+                vagueBtn.className = "w-full text-left p-3 rounded-xl border border-borderSoft bg-white font-bold text-subtle hover:text-ink flex justify-between items-center";
+            }
+        }
+    </script>
+</body>
+</html>
